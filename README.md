@@ -19,6 +19,6 @@ Github is all about contributions. I realize this project will only really work 
 Doing so is easy, as you just need to create a new endpoint for your country, and hook it up to the top40 albums and singles in your country.
 
 ## License
-Copyright (c) 2013 @marcos_placona, Marcos Placona.  
+Copyright (c) 2013 [https://twitter.com/marcos_placona](@marcos_placona), [https://plus.google.com/111557456465418142877](Marcos Placona).  
 [Placona.co.uk](http://www.placona.co.uk)
 Licensed under the MIT license.
