@@ -3,9 +3,15 @@ require 'sinatra'
 require 'open-uri'
 require 'nokogiri'
 require 'json'
+require 'haml'
 
 top_40_singles  = 'http://www.bbc.co.uk/radio1/chart/singles/print'
 top_40_albuns   = 'http://www.bbc.co.uk/radio1/chart/albums/print'
+
+
+configure do
+  set :views, "#{File.dirname(__FILE__)}/views"
+end
 
 def parse_url (url)
     Nokogiri::HTML(open(url)).xpath('//table[@border="1"]/tr').collect do |row|
@@ -24,6 +30,10 @@ def create_output_structure(url)
     entries.delete_at(0) #unnecessary entry (hack)
     time = Time.now
     {:chartDate => time.to_i, :retrieved => Time.new(time.year, time.month, time.day).to_i, :entries => entries}
+end
+
+get '/' do
+    haml :index
 end
 
 get '/top-40-single.json' do
