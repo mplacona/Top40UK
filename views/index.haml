@@ -1,0 +1,32 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %title UKTop 40 Chart
+    %meta{:content => "This is the UK Top 40 chart by Radio1", :name => "description"}/
+    %meta{:content => "Marcos Placona", :name => "author"}/
+
+    %link{:href => "/css/bootstrap.min.css", :rel => "stylesheet"}/
+    %link{:href => "/css/style.css", :rel => "stylesheet"}/
+    
+    %body
+      %a{:href => "https://github.com/mplacona/Top40UK"}
+        %img{:style => "position: absolute; top: 0; right: 0; border: 0;", :src => "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png", :alt => "Fork me on GitHub"}
+      
+      %div.hero-unit{ :style => "text-align:center"}        
+        %a{:href => "http://top40.placona.co.uk"} Top40.placona.co.uk 
+        was created by
+        %a{:href => "http://www.placona.co.uk", :title => "Visit Placona.co.uk", :target => "_blank"} Marcos Placona
+        using Ruby and
+        %a{:href => "http://sinatrarb.com", :title => "Sinatra", :target => "_blank"} Sinatra.
+
+        %h3 
+          Possible Endpoints:
+        
+        %ul
+          %li
+            %a{:href => "http://top40.placona.co.uk/top-40-single.json", :title => "Top 40 UK Singles"} Top 40 UK Singles
+          %li  
+            %a{:href => "http://top40.placona.co.uk/top-40-album.json", :title => "Top 40 UK Albums"} Top 40 UK Albums
+
+    
