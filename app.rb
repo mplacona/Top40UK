@@ -4,25 +4,14 @@ require 'open-uri'
 require 'nokogiri'
 require 'json'
 require 'haml'
-require File.join(File.dirname(__FILE__), 'HTTPCacher')
-
-top_40_singles  = 'http://www.bbc.co.uk/radio1/chart/singles/print'
-top_40_albuns   = 'http://www.bbc.co.uk/radio1/chart/albums/print'
-
-# Retrieval time
-time = Time.now
-$retrieved = Time.new(time.year, time.month, time.day).to_i
-
-# initialize cache
-$getter = HTTPCacher.new( File.dirname(__FILE__) + "/cache" )
+require File.join(File.dirname(__FILE__), 'settings')
 
 configure do
   set :views, "#{File.dirname(__FILE__)}/views"
 end
 
 def parse_url (url, key)
-    data = $getter.get( url, key )
-    puts @retrieved
+    data = Config.getter.get( url, key )
     Nokogiri::HTML(data).xpath('//table[@border="1"]/tr').collect do |row|
         position            =       row.at("td[1]/text()")
         status              =       row.at("td[2]/text()")
@@ -38,7 +27,7 @@ def create_output_structure(url, key)
     entries = parse_url(url, key)
     entries.delete_at(0) #unnecessary entry (hack)
     time = Time.now
-    {:chartDate => time.to_i, :retrieved => $retrieved, :entries => entries}
+    {:chartDate => time.to_i, :retrieved => Config.retrieved, :entries => entries}
 end
 
 get '/' do
@@ -47,10 +36,10 @@ end
 
 get '/top-40-single.json' do
     content_type :json
-    JSON.pretty_generate(create_output_structure(top_40_singles, $retrieved.to_s + ".single"))
+    JSON.pretty_generate(create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".single"))
 end
 
 get '/top-40-album.json' do
     content_type :json
-    JSON.pretty_generate(create_output_structure(top_40_albuns, $retrieved.to_s + ".album"))
+    JSON.pretty_generate(create_output_structure(Config.top_40_albuns, Config.retrieved.to_s + ".album"))
 end
