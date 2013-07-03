@@ -34,12 +34,21 @@ get '/' do
     haml :index
 end
 
-get '/top-40-single.json' do
+get '/chart/:country/:type.json' do
     content_type :json
     JSON.pretty_generate(create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".single"))
 end
 
-get '/top-40-album.json' do
+get '/chart/:country/:type.json' do
     content_type :json
-    JSON.pretty_generate(create_output_structure(Config.top_40_albuns, Config.retrieved.to_s + ".album"))
+    JSON.pretty_generate(create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".album"))
+end
+
+# Redirect the old URLs
+get '/top-40-single.json' do
+    redirect to('/chart/gb/singles.json'), 301
+end
+
+get '/top-40-album.json' do
+    redirect to('/chart/gb/albums.json'), 301
 end
