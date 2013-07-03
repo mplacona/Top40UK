@@ -14,7 +14,7 @@ def parse_url (url, key)
     data = Config.getter.get( url, key )
     Nokogiri::HTML(data).xpath('//table[@border="1"]/tr').collect do |row|
         position            =       row.at("td[1]/text()")
-        status              =       row.at("td[2]/text()")
+        status              =       row.at("td[2]/text()").to_s.chomp
         previousPosition    =       row.at("td[3]/text()")
         noWeeks             =       row.at("td[4]/text()")
         artist              =       row.at("td[5]/text()")
@@ -34,12 +34,23 @@ get '/' do
     haml :index
 end
 
-get '/top-40-single.json' do
+get '/chart/:country/:type.json' do
     content_type :json
-    JSON.pretty_generate(create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".single"))
+    case params[:type]
+    when 'singles'
+        JSON.pretty_generate(create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".single"))
+    when 'albums'
+        JSON.pretty_generate(create_output_structure(Config.top_40_albums, Config.retrieved.to_s + ".album"))
+    else
+        raise ArgumentError, 'Unknown chart type'
+    end
+end
+
+# Redirect the old URLs
+get '/top-40-single.json' do
+    redirect to('/chart/gb/singles.json'), 301
 end
 
 get '/top-40-album.json' do
-    content_type :json
-    JSON.pretty_generate(create_output_structure(Config.top_40_albuns, Config.retrieved.to_s + ".album"))
+    redirect to('/chart/gb/albums.json'), 301
 end
