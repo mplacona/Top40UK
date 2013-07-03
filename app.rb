@@ -14,7 +14,7 @@ def parse_url (url, key)
     data = Config.getter.get( url, key )
     Nokogiri::HTML(data).xpath('//table[@border="1"]/tr').collect do |row|
         position            =       row.at("td[1]/text()")
-        status              =       row.at("td[2]/text()")
+        status              =       row.at("td[2]/text()").to_s.chomp
         previousPosition    =       row.at("td[3]/text()")
         noWeeks             =       row.at("td[4]/text()")
         artist              =       row.at("td[5]/text()")
