@@ -36,12 +36,14 @@ end
 
 get '/chart/:country/:type.json' do
     content_type :json
-    JSON.pretty_generate(create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".single"))
-end
-
-get '/chart/:country/:type.json' do
-    content_type :json
-    JSON.pretty_generate(create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".album"))
+    case params[:type]
+    when 'singles'
+        JSON.pretty_generate(create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".single"))
+    when 'albums'
+        JSON.pretty_generate(create_output_structure(Config.top_40_albums, Config.retrieved.to_s + ".album"))
+    else
+        raise ArgumentError, 'Unknown chart type'
+    end
 end
 
 # Redirect the old URLs
