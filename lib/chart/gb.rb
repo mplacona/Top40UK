@@ -3,12 +3,17 @@ require 'nokogiri'
 
 class GBChart
 
+	TYPE_URLS = {
+		:singles => 'http://www.bbc.co.uk/radio1/chart/singles/print',
+		:albums => 'http://www.bbc.co.uk/radio1/chart/albums/print'
+	}
+
 	def get(type)
 		case type
 		when :singles
-			create_output_structure(Config.top_40_singles, Config.retrieved.to_s + ".single")
+			create_output_structure(TYPE_URLS[:singles], Config.retrieved.to_s + ".single")
 		when :albums
-			create_output_structure(Config.top_40_albums, Config.retrieved.to_s + ".album")
+			create_output_structure(TYPE_URLS[:albums], Config.retrieved.to_s + ".album")
 		else
 			raise ArgumentError, 'Unknown chart type'
 		end
