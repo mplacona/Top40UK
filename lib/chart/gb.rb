@@ -21,7 +21,7 @@ class GBChart
 
 	def parse_url (url, key)
 	    data = Config.getter.get( url, key )
-	    Nokogiri::HTML(data).xpath('//table[@border="1"]/tr').collect do |row|
+	    Nokogiri::HTML(data).xpath('//table[@border="1"]/tr[not(th)]').collect do |row|
 	        position            =       row.at("td[1]/text()")
 	        status              =       row.at("td[2]/text()").to_s.chomp
 	        previousPosition    =       row.at("td[3]/text()")
@@ -34,7 +34,6 @@ class GBChart
 
 	def create_output_structure(url, key)
 	    entries = parse_url(url, key)
-	    entries.delete_at(0) #unnecessary entry (hack)
 	    time = Time.now
 	    {:chartDate => time.to_i, :retrieved => Config.retrieved, :entries => entries}
 	end
