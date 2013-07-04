@@ -25,6 +25,7 @@ get '/chart/:country/:type.json' do
         JSON.pretty_generate chart.get params[:type].to_sym
     end
 
+    content_type :json
     json
 end
 
