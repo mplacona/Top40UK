@@ -48,10 +48,9 @@ class GBChart
 
 		entries = parse_entries(doc)
 
-		time = Time.now
 		{
 			:chartDate => chart_date.to_i,
-			:retrieved => Config.retrieved,
+			:retrieved => Time.now,
 			:entries   => entries
 		}
 	end
