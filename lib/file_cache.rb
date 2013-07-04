@@ -26,7 +26,9 @@ class FileCache
     end
 
     def set(key, data)
-    	IO.write make_filename(key), data
+        File.open(make_filename(key), 'w') do |f|
+            f << data
+        }
     end
 
 end
