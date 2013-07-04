@@ -44,6 +44,7 @@ class GBChart
 		doc = Nokogiri::HTML( get_data(url) )
 
 		chart_date = Time.parse doc.at('//h2/text()').content.split(' - ')[1] + " 12:00:00"
+		chart_date = Time.new chart_date.year, chart_date.month, chart_date.day
 
 		entries = parse_entries(doc)
 
