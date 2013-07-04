@@ -50,7 +50,7 @@ class GBChart
 
 		{
 			:chartDate => chart_date.to_i,
-			:retrieved => Time.now,
+			:retrieved => Time.now.to_i,
 			:entries   => entries
 		}
 	end
