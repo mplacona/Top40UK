@@ -6,6 +6,9 @@ require 'json'
 require 'haml'
 require File.join(File.dirname(__FILE__), 'settings')
 
+# Add lib directory to load path
+$:.unshift File.join(File.dirname(__FILE__), 'lib')
+
 configure do
   set :views, "#{File.dirname(__FILE__)}/views"
 end
