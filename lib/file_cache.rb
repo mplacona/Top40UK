@@ -28,7 +28,7 @@ class FileCache
     def set(key, data)
         File.open(make_filename(key), 'w') do |f|
             f << data
-        }
+        end
     end
 
 end
