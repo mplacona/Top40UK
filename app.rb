@@ -1,7 +1,5 @@
 require 'rubygems'
 require 'sinatra'
-require 'open-uri'
-require 'nokogiri'
 require 'json'
 require 'haml'
 require File.join(File.dirname(__FILE__), 'settings')

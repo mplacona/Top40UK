@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'nokogiri'
+
 class GBChart
 
 	def get(type)
