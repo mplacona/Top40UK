@@ -22,20 +22,27 @@ class GBChart
 	def parse_url (url, key)
 	    data = Config.getter.get( url, key )
 	    Nokogiri::HTML(data).xpath('//table[@border="1"]/tr[not(th)]').collect do |row|
-	        position            =       row.at("td[1]/text()").content.to_i
-	        status              =       row.at("td[2]/text()").content.strip
-	        previousPosition    =       row.at("td[3]/text()").content.to_i
-	        noWeeks             =       row.at("td[4]/text()").content.to_i
-	        artist              =       row.at("td[5]/text()").content
-	        title               =       row.at("td[6]/text()").content
-	        {:position => position, :noWeeks => noWeeks, :artist => artist, :title => title, :change => {:status => status, :previous => previousPosition}}
+	        {
+	        	:position => row.at("td[1]/text()").content.to_i,
+	        	:noWeeks  => row.at("td[4]/text()").content.to_i,
+	        	:artist   => row.at("td[5]/text()").content,
+	        	:title    => row.at("td[6]/text()").content,
+	        	:change => {
+	        		:status   => row.at("td[2]/text()").content.strip,
+	        		:previous => row.at("td[3]/text()").content.to_i
+	        	}
+	        }
 	    end
 	end
 
 	def create_output_structure(url, key)
 	    entries = parse_url(url, key)
 	    time = Time.now
-	    {:chartDate => time.to_i, :retrieved => Config.retrieved, :entries => entries}
+	    {
+	    	:chartDate => time.to_i,
+	    	:retrieved => Config.retrieved,
+	    	:entries   => entries
+	    }
 	end
 
 end
