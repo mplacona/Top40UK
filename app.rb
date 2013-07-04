@@ -1,11 +1,11 @@
+# Add lib directory to load path
+$:.unshift File.join(File.dirname(__FILE__), 'lib')
+
 require 'rubygems'
 require 'sinatra'
 require 'json'
 require 'haml'
 require File.join(File.dirname(__FILE__), 'settings')
-
-# Add lib directory to load path
-$:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'chart'
 
@@ -18,10 +18,14 @@ get '/' do
 end
 
 get '/chart/:country/:type.json' do
-    chart = Chart.create params[:country].to_sym
-    data  = chart.get params[:type].to_sym
+    cache_key = "chart_#{params[:country]}_#{params[:type]}"
 
-    JSON.pretty_generate data
+    json = Config.cache.get(cache_key) do
+        chart = Chart.create params[:country].to_sym
+        JSON.pretty_generate chart.get params[:type].to_sym
+    end
+
+    json
 end
 
 # Redirect the old URLs

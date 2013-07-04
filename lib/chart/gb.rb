@@ -12,9 +12,9 @@ class GBChart
 	def get(type)
 		case type
 		when :singles
-			create_output_structure(TYPE_URLS[:singles], Config.retrieved.to_s + ".single")
+			create_output_structure(TYPE_URLS[:singles])
 		when :albums
-			create_output_structure(TYPE_URLS[:albums], Config.retrieved.to_s + ".album")
+			create_output_structure(TYPE_URLS[:albums])
 		else
 			raise ArgumentError, 'Unknown chart type'
 		end
@@ -35,8 +35,12 @@ class GBChart
 	    end
 	end
 
-	def create_output_structure(url, key)
-		doc = Nokogiri::HTML( Config.getter.get( url, key ) )
+	def get_data(url)
+		Net::HTTP.get_response(URI.parse(url)).body
+	end
+
+	def create_output_structure(url)
+		doc = Nokogiri::HTML( get_data(url) )
 
 		chart_date = Time.parse doc.at('//h2/text()').content.split(' - ')[1] + " 12:00:00"
 
