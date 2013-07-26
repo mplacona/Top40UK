@@ -7,7 +7,7 @@ class GBChart
 
 	TYPE_URLS = {
 		:singles => 'http://www.bbc.co.uk/radio1/chart/singles/print',
-		:albums => 'http://www.bbc.co.uk/radio1/chart/albums/print'
+		:albums => 'http://www.bbc.co.uk/radio1/chart/updatealbums/print'
 	}
 
 	def get(type)
