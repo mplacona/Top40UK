@@ -28,12 +28,3 @@ get '/chart/:country/:type.json' do
     content_type :json
     json
 end
-
-# Redirect the old URLs
-get '/top-40-single.json' do
-    redirect to('/chart/gb/singles.json'), 301
-end
-
-get '/top-40-album.json' do
-    redirect to('/chart/gb/albums.json'), 301
-end
