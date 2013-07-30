@@ -1,7 +1,8 @@
 class FileCache
-	def initialize (base_dir, max_age)
+    def initialize (base_dir, max_age, caching = true)
         @base_dir = base_dir
         @max_age  = max_age
+        @caching = caching
     end
 
     def make_filename(key)
@@ -9,7 +10,12 @@ class FileCache
     end
 
     def get(key)
-    	filename = make_filename(key)
+    	#return contents if caching is disabled
+        if(!@caching)
+            return yield
+        end
+        
+        filename = make_filename(key)
 
     	if File.exists? filename
     		if Time.now - File.mtime(filename) <= @max_age
