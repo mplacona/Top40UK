@@ -3,6 +3,8 @@ class Chart
 		case country
 		when :gb
 			GBChart.new
+        when :us
+            USChart.new
 		else
 			raise ArgumentException, 'Unknown country code.'
 		end
@@ -10,3 +12,4 @@ class Chart
 end
 
 require 'chart/gb'
+require 'chart/us'
