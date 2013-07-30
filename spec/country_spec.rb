@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'chart/country'
 
 describe "CountryChart" do
-    before(:each) do
+    before(:all) do
         TYPE_URLS = {
             :singles => 'http://www.bbc.co.uk/radio1/chart/singles/print',
             :albums => 'http://www.bbc.co.uk/radio1/chart/updatealbums/print'
@@ -28,5 +28,10 @@ describe "CountryChart" do
         move = @country_chart.calculate_move 1, 1, 1
         move.should eql "non-mover"
     end
+
+    it "shoud raise exception when calling extract_date internally" do
+        expect {@country_chart.extract_date String.new}.to raise_error(NotImplementedError)
+    end
+
 end
 

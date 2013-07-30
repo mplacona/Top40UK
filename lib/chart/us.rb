@@ -30,19 +30,7 @@ class USChart < CountryChart
             }
         end
     end
-
-    def create_output_structure(url)
-		doc = Nokogiri::HTML( get_data(url) )
-
-		chart_date = Time.parse doc.at('//select[@name="date"]/option[@selected="selected"]').content + " 12:00:00"
-		chart_date = Time.new chart_date.year, chart_date.month, chart_date.day
-
-		entries = parse_entries(doc)
-
-		{
-			:chartDate => chart_date.to_i,
-			:retrieved => Time.now.to_i,
-			:entries   => entries
-		}
-	end
+    def extract_date(doc)
+		Time.parse doc.at('//select[@name="date"]/option[@selected="selected"]').content + " 12:00:00"
+    end
 end

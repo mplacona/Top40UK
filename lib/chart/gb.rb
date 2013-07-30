@@ -2,24 +2,18 @@ require 'net/http'
 require 'nokogiri'
 require 'open-uri'
 require 'time'
+require 'chart/country'
 
-class GBChart
+class GBChart < CountryChart
 
 	TYPE_URLS = {
 		:singles => 'http://www.bbc.co.uk/radio1/chart/singles/print',
 		:albums => 'http://www.bbc.co.uk/radio1/chart/updatealbums/print'
 	}
 
-	def get(type)
-		case type
-		when :singles
-			create_output_structure(TYPE_URLS[:singles])
-		when :albums
-			create_output_structure(TYPE_URLS[:albums])
-		else
-			raise ArgumentError, 'Unknown chart type'
-		end
-	end
+    def initialize
+        super(TYPE_URLS)
+    end
 
 	def parse_entries(doc)
 	    doc.xpath('//table//tr[not(th)]').collect do |row|
@@ -36,23 +30,8 @@ class GBChart
 	    end
 	end
 
-	def get_data(url)
-		Net::HTTP.get_response(URI.parse(url)).body
-	end
-
-	def create_output_structure(url)
-		doc = Nokogiri::HTML( get_data(url) )
-
-		chart_date = Time.parse doc.at('//h1').content.split(' - ')[1] + " 12:00:00"
-		chart_date = Time.new chart_date.year, chart_date.month, chart_date.day
-
-		entries = parse_entries(doc)
-
-		{
-			:chartDate => chart_date.to_i,
-			:retrieved => Time.now.to_i,
-			:entries   => entries
-		}
-	end
+    def extract_date(doc)
+        Time.parse doc.at('//h1').content.split(' - ')[1] + " 12:00:00"
+    end
 
 end

@@ -39,4 +39,22 @@ class CountryChart
         Net::HTTP.get_response(URI.parse(url)).body
         #File.read("singles.html")
     end
+
+    def extract_date(doc)
+        raise NotImplementedError, "You should implement this method"
+    end
+
+	def create_output_structure(url)
+		doc = Nokogiri::HTML( get_data(url) )
+
+		chart_date = extract_date doc
+		chart_date = Time.new chart_date.year, chart_date.month, chart_date.day
+
+		entries = parse_entries(doc)
+		{
+			:chartDate => chart_date.to_i,
+			:retrieved => Time.now.to_i,
+			:entries   => entries
+		}
+	end
 end
