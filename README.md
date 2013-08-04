@@ -1,10 +1,13 @@
 [![Build Status](https://travis-ci.org/mplacona/Top40UK.png?branch=master)](https://travis-ci.org/mplacona/Top40UK)
 
-# Top40UK - v 0.2
+# Top40UK - v 0.3
 ---
 Gets the Official Top 40 Albums and Singles and turns it into readable JSON
 
 ## Changes
+- v0.3
+-- Add FR charts
+
 - v0.2 
 -- Add US charts and refactor for new implementations
 -- Add even more unit tests
