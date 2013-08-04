@@ -35,3 +35,15 @@ describe 'US Top 40 - Singles' do
         last_response.header['Content-Type'].should include 'application/json'
     end
 end
+
+describe 'FR Top 40' do
+    it "should load the FR top 40 singles" do
+        get 'chart/fr/singles.json'
+        last_response.should be_ok
+    end
+
+    it "should load the FR top 40 albums" do
+        get 'chart/fr/albums.json'
+        last_response.should be_ok
+    end
+end
