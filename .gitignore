@@ -17,3 +17,5 @@ tmp
 cache/*
 /config
 .DS_Store
+singles.html
+albums.html
