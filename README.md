@@ -6,12 +6,12 @@ Gets the Official Top 40 Albums and Singles and turns it into readable JSON
 
 ## Changes
 - v0.3
--- Add FR charts
+  - Add FR charts
 
 - v0.2 
--- Add US charts and refactor for new implementations
--- Add even more unit tests
--- Hook up with autotest for continuous integration
+  - Add US charts and refactor for new implementations
+  - Add even more unit tests
+  - Hook up with autotest for continuous integration
 
 ## Dependencies
 * [Sinatra](http://www.sinatrarb.com/)
